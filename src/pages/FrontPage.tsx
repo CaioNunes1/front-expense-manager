@@ -1,6 +1,6 @@
 const FrontPage = () => {
   return (
-    <div>
+    <div className="border-box">
       
     </div>
   )
