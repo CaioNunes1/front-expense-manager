@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    /* box-sizing: border-box;a largura e altura
+     de um elemento aplicam-se apenas ao conteúdo, e o padding e as bordas são adicionados ao tamanho total do elemento. */
+}
+body,html{
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /*evita overflow horizontal*/
+    background: linear-gradient(to top, #110079 0%, #5E5FDF 44%, #8E9AFF 100% ) ;
+    font-family: 'Poppins', sans-serif;
+    color: #ffff;
+}

@@ -1,8 +1,9 @@
 const FrontPage = () => {
   return (
-    <div className="border-box">
-      
+    <div className="h-screen flex justify-center items-center">
+      <h2 className="text-25px">Expense Manager</h2>
     </div>
+
   )
 }
 

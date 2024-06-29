@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
         <Routes>
-          <Route path="./pages/FrontPage.tsx" element={<FrontPage />} />{/*Esse path é para carregar o caminho do arquivo */}
+          <Route path="FrontPage" element={<FrontPage />} />{/*Esse path é para carregar o caminho do arquivo */}
         </Routes>
     </Router>
   );
