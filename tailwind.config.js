@@ -8,7 +8,7 @@ export default {
     extend: {
       fontSize:{
         '25px':'25px'
-      }
+      },
     },
   },
   plugins: [],
