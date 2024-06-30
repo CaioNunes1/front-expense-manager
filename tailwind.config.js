@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       fontSize:{
-        '25px':'25px'
+        '25px':'25px',
+        '30px':'30px',
       },
     },
   },
