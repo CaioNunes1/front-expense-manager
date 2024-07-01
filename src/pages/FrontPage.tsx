@@ -4,7 +4,9 @@ const FrontPage = () => {
   const navigate = useNavigate(); // Obtém a função de navegação
 
   const handleGetStarted=()=>{
-    return navigate('/SignIn')
+    setTimeout(()=>{
+      navigate('/SignIn')
+    }, 500);//1000ms são 1 sec
   }
   return (
     <div className="h-screen flex flex-col justify-center ">
