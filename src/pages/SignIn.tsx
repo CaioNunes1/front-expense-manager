@@ -51,6 +51,7 @@ const SignIn = () => {
 
     <div className="flex justify-center">
         <div className="flex flex-col justify-center relative top-20">
+            <h2 className="flex justify-center mb-5 text-20px">Entre na sua conta</h2>
             <form onSubmit={handleLogin}>
                     <div id='white-transparent-container'className="flex flex-col h-72 w-80 " style={{background:'rgba(255, 255, 255, 0.5)',borderRadius:'25px'}}>
                         
@@ -75,7 +76,7 @@ const SignIn = () => {
                 </form>
 
             <div className="flex relative top-20 justify-center">
-                <a href="SignUp" className="hover:bg-gray-400 p-2 rounded">Não tem cadastro? Cadastra-se Aqui </a>
+                <a href="SignUp" className="hover:bg-gray-400 p-2 rounded">Não tem cadastro? Cadastre-se Aqui </a>
             </div>
         </div>
       </div>
