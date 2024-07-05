@@ -1,4 +1,4 @@
-import api from "./api"  
+import api from "./api/api"  
 interface DtoSignIn{
   email:string,
   password:string,
@@ -29,5 +29,20 @@ export async function signUpUser({firstname,lastname,email,password}:DtoSignUp){
   catch(error){
     console.log(error);
     return error;
+  }
+}
+
+export async function getUser(email:string){
+  try{
+    const response=await api.get('auth/getUser',{
+      params:{
+        email:email,
+      }
+    })
+
+    return response.data
+  }
+  catch(error){
+    console.log(error);
   }
 }

@@ -31,6 +31,7 @@ const handleButton=async (event:React.FormEvent<HTMLFormElement>)=>{
     
 
     const result=await signUpUser({firstname,lastname,email,password});
+    
 
     if(result?.access_token){
       setExists(true);
@@ -48,7 +49,7 @@ const handleButton=async (event:React.FormEvent<HTMLFormElement>)=>{
   }
 
   if(exists){
-    navigate('/Home')
+    navigate('/SignIn')
   }
 
 }

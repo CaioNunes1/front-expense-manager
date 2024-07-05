@@ -1,6 +1,7 @@
 import { useState } from "react"
-import { signInUser } from "../services/user"
+import { getUser, signInUser } from "../services/user"
 import { useNavigate } from "react-router-dom"
+
 
 const SignIn = () => {
     const[email,setEmail]=useState('')
@@ -20,9 +21,13 @@ const SignIn = () => {
             }
 
             const result=await signInUser({email,password});
+            const resultGetuser=await getUser(email)
 
-            if(result?.access_token){
+            if(result?.access_token && resultGetuser!==null){
                 setExists(true);
+                
+                localStorage.setItem('userId',resultGetuser.toString())
+                
                 alert('Logado com sucesso')
                 
             }
@@ -86,3 +91,7 @@ const SignIn = () => {
 }
 
 export default SignIn
+
+// export const userId=(userId:number)=>{
+//     HookUserId(userId)
+// } 
