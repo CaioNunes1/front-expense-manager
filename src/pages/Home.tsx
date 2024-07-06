@@ -46,7 +46,6 @@ const Home/*: React.FC<PropsHome>*/ = () => {
   return (
     <div className="flex flex-col">
       <h2 className='flex justify-center relative top-6 text-25px'>Manager Expense</h2>
-      <h3>User:{userId}</h3>
 
       <div className="flex flex-col items-center relative top-52">
           <h2>Expenses Categories</h2>
