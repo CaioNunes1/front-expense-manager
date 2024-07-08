@@ -11,6 +11,11 @@ const Home/*: React.FC<PropsHome>*/ = () => {
     userId:number,
     name:string,
   }
+  const[menuOpen,setMenuOpen]=useState(false)
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
 
   const[categories,setCategories]=useState<DtoCategory[]>([]);
@@ -47,15 +52,24 @@ const Home/*: React.FC<PropsHome>*/ = () => {
     <div className="flex flex-col">
       <h2 className='flex justify-center relative top-6 text-25px'>Manager Expense</h2>
 
+
       <div className="flex flex-col items-center relative top-52">
           <h2>Expenses Categories</h2>
         <div className='flex justify-center w-80' style={{height:'400px',background:'rgba(255,255,255,0.5)', 
           borderRadius:'30px'}}>
-          <ul className="flex flex-col">
+          <ul className="flex flex-col" style={{cursor:'pointer'}} onClick={toggleMenu} >
             {categories.map((category,index)=>(
-              <li key={index}>
-                <p>{category.name}</p> 
-                </li>
+              <div>
+                <li key={index} >
+                  <a >{category.name}</a> 
+                  </li>
+                  {menuOpen &&(
+                    <div className="flex">
+
+                    </div>
+
+                  )} 
+              </div>
             ))}
           </ul>
         </div>
