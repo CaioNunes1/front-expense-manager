@@ -53,7 +53,21 @@ const Home/*: React.FC<PropsHome>*/ = () => {
       <h2 className='flex justify-center relative top-6 text-25px'>Manager Expense</h2>
 
 
-      <div className="flex flex-col items-center relative top-52">
+      <div className="flex flex-col items-center relative top-24">
+        <label className="flex relative bottom-12">Adicione uma categoria</label>
+        <form >
+          <div className="flex justify-center w-80" style={{position:'relative', bottom:'40px'}}>
+            <div>
+              <input type="text" placeholder="Digite uma categoria de gastos" className="h-10 w-60 " 
+              style={{borderRadius:'10px', color:'black', background:'rgba(255, 255, 255, 0.6)', width:'300px'}} />
+              <div className="flex justify-center relative top-5">
+                <button className="h-12 w-36 bg-white hover:bg-gray-300" 
+                style={{color:'#251893', borderRadius:'40px'}} >Add</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
           <h2>Expenses Categories</h2>
         <div className='flex justify-center w-80' style={{height:'400px',background:'rgba(255,255,255,0.5)', 
           borderRadius:'30px'}}>
@@ -65,7 +79,7 @@ const Home/*: React.FC<PropsHome>*/ = () => {
                   </li>
                   {menuOpen &&(
                     <div className="flex">
-
+                      
                     </div>
 
                   )} 

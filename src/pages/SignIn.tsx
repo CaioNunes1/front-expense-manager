@@ -74,7 +74,7 @@ const SignIn = () => {
                     </div>
 
                     <div id='Button' className="flex justify-center relative top-10">
-                        <button className="h-12 w-60 bg-white hover:bg-gray-300" 
+                    <button className="h-12 w-60 bg-white hover:bg-gray-300" 
                         style={{color:'#251893', borderRadius:'40px'}} >Login</button>
                     </div>
 
