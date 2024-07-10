@@ -19,3 +19,13 @@ export const getCategory= async (userId:number): Promise<DtoCategory[]> =>{
         throw error;
     }
 }
+
+export const createCategory =async({name,userId}:DtoCategory)=>{
+    try{
+        const response =await api.post('category/create',{name,userId})
+        return response.data;
+    }
+    catch(error){
+        console.log(error);
+    }
+}

@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { getCategory } from "../services/category";
 import { getUserId } from "../hooks/hook.userId";
-// interface PropsHome{
-//   userId:number
-// }
+import { useNavigate } from "react-router-dom";
 
-const Home/*: React.FC<PropsHome>*/ = () => {
+const Home = () => {
 //assim que faz para quando tem que se passar um props no elemento
   interface DtoCategory{
     userId:number,
     name:string,
   }
   const[menuOpen,setMenuOpen]=useState(false)
+  //const[name,setCategoryCreated]=useState('');
+  const navigate=useNavigate()
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -48,21 +48,41 @@ const Home/*: React.FC<PropsHome>*/ = () => {
   },[userId])//esse userId aqui significa que o useEffct será executado sempre que 
   //o userId mudar, no caso sendo outro usuário
 
+  const AddCategory=()=>{
+    navigate('/AddCategory')
+  }
+
+  // const handleCreateCategory=async (/*event:React.FormEvent<HTMLFormElement>*/)=>{
+  //   //event.preventDefault()
+  //   if(userId!==null){
+  //     const response=await createCategory({name,userId})
+
+  //     if(response!==null){
+  //       alert('Nova Categoria criada')
+  //     }
+  //     else{
+  //       alert('Erro ao criar categoria')
+  //     }
+  //   }
+  // }
+  
+  
+
   return (
     <div className="flex flex-col">
       <h2 className='flex justify-center relative top-6 text-25px'>Manager Expense</h2>
 
-
-      <div className="flex flex-col items-center relative top-24">
-        <label className="flex relative bottom-12">Adicione uma categoria</label>
-        <form >
-          <div className="flex justify-center w-80" style={{position:'relative', bottom:'40px'}}>
+      <div className="flex flex-col items-center relative top-32">
+        {/* <label className="flex relative bottom-12">Adicione uma categoria</label> */}
+        <form onSubmit={AddCategory}>
+          <div className="flex justify-center w-80" style={{position:'relative', bottom:'60px'}}>
             <div>
-              <input type="text" placeholder="Digite uma categoria de gastos" className="h-10 w-60 " 
-              style={{borderRadius:'10px', color:'black', background:'rgba(255, 255, 255, 0.6)', width:'300px'}} />
+              {/* <input type="text" value={name} placeholder="Digite uma categoria de gastos" className="h-10 w-60 " 
+              style={{borderRadius:'10px', color:'black', background:'rgba(255, 255, 255, 0.6)', width:'300px'}} 
+              onChange={(e)=>setCategoryCreated(e.target.value)}/> */}
               <div className="flex justify-center relative top-5">
-                <button className="h-12 w-36 bg-white hover:bg-gray-300" 
-                style={{color:'#251893', borderRadius:'40px'}} >Add</button>
+                <button className="h-12 w-60 bg-white hover:bg-gray-300" 
+                style={{color:'#251893', borderRadius:'40px'}} >Adicione uma categoria</button>
               </div>
             </div>
           </div>
