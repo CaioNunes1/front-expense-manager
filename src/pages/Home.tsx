@@ -52,19 +52,6 @@ const Home = () => {
     navigate('/AddCategory')
   }
 
-  // const handleCreateCategory=async (/*event:React.FormEvent<HTMLFormElement>*/)=>{
-  //   //event.preventDefault()
-  //   if(userId!==null){
-  //     const response=await createCategory({name,userId})
-
-  //     if(response!==null){
-  //       alert('Nova Categoria criada')
-  //     }
-  //     else{
-  //       alert('Erro ao criar categoria')
-  //     }
-  //   }
-  // }
   
   
 
