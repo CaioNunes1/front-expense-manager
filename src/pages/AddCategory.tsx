@@ -1,31 +1,56 @@
 import { useState } from "react";
-import { createCategory } from "../services/category";
+import { createCategory, getCategoryId } from "../services/category";
 import { getUserId } from "../hooks/hook.userId";
+import { createExpense } from "../services/expense";
+import { useNavigate } from "react-router-dom";
 const AddCategory = () => {
     const[name,setCategoryCreated]=useState('');
     const[description,setDescription]=useState('');
-    const[value,setValue]=useState<number>(0);
-
+    const[amount,setAmount]=useState<number>(0);
+    const[categoryId,setCategoryId]=useState<number>(0)
     const userId=getUserId();
-
-    const handleCreateCategory=async (/*event:React.FormEvent<HTMLFormElement>*/)=>{
-    //event.preventDefault()
+    const navigate=useNavigate();
+    //let categoryId;
+    
+    const handleCreateCategory=async (event:React.FormEvent<HTMLFormElement>)=>{
+    event.preventDefault()
     if(userId!==null){
-      const response=await createCategory({name,userId})
+      const responseCategory=await createCategory({name,userId})      
 
-      if(response!==null){
-        alert('Nova Categoria criada')
+      //setCategoryId(responseCategory);
+
+      if(responseCategory!==null){
+        //pegando o id da categoria criada para passar para a expense
+        const responseGetegoryId=await getCategoryId({name,userId});
+
+        setCategoryId(responseGetegoryId);
+        console.log('Setando id para criar expense')
+
+        try{
+          const responseExpense=await createExpense({amount,description,categoryId,userId});
+    
+          if(responseExpense!==null){
+            console.log(responseExpense)
+            alert('Expense criada');
+            navigate('/Home')
+          }
+        }
+        catch(error){
+          console.log(error)
+        }
       }
       else{
         alert('Erro ao criar categoria')
       }
+
+
     }
   }
 
   const handleNumberChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     const numValue=parseInt(e.target.value,10)//10 no final para flar que é um númereo decimal
     //usando o parseInt para converter o valor digitado que sempre será uma string para um number
-    setValue(numValue);
+    setAmount(numValue);
   }
 
   return (
@@ -56,7 +81,7 @@ const AddCategory = () => {
 
                         <div className="flex flex-col relative left-9 top-24">
                             <label htmlFor="">Preço</label>
-                            <input type="text" value={value}  placeholder="Digite o preço da dispesa " className="h-10 w-60" 
+                            <input type="text" value={amount}  placeholder="Digite o preço da dispesa " className="h-10 w-60" 
                             style={{borderRadius:'10px', color:'black', background:'rgba(255, 255, 255, 0.5)'}} 
                             onChange={handleNumberChange}/>
                         </div>

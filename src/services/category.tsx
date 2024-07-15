@@ -5,6 +5,12 @@ interface DtoCategory{
     userId:number,
 }
 
+// interface DtoCategoryResponse{
+//     name:string,
+//     userId:number,
+//     id:number
+// }
+
 export const getCategory= async (userId:number): Promise<DtoCategory[]> =>{
     try{
         const response=await api.get('category/getUserCategoryById/',{
@@ -27,5 +33,17 @@ export const createCategory =async({name,userId}:DtoCategory)=>{
     }
     catch(error){
         console.log(error);
+    }
+}
+
+export const getCategoryId = async({name,userId}:DtoCategory)=>{
+    try{
+        const response= await api.get('category/getCategoryId',{
+            params:{name,userId}
+        })
+        return response.data;
+    }
+    catch(e){
+        console.log(e);
     }
 }
