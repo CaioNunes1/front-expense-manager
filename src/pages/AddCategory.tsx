@@ -17,23 +17,22 @@ const AddCategory = () => {
     if(userId!==null){
       const responseCategory=await createCategory({name,userId})      
 
-      //setCategoryId(responseCategory);
 
       if(responseCategory!==null){
         //pegando o id da categoria criada para passar para a expense
-        const responseGetegoryId=await getCategoryId({name,userId});
+        const responseGetcateegoryId=await getCategoryId({name,userId});
 
-        setCategoryId(responseGetegoryId);
+        setCategoryId(responseGetcateegoryId);
         console.log('Setando id para criar expense')
 
         try{
-          const responseExpense=await createExpense({amount,description,categoryId,userId});
+          //const responseExpense=await createExpense({amount,description,categoryId,userId});
     
-          if(responseExpense!==null){
-            console.log(responseExpense)
-            alert('Expense criada');
-            navigate('/Home')
-          }
+          // if(responseExpense!==null){
+          //   console.log(responseExpense)
+          //   alert('Expense criada');
+          //   navigate('/Home')
+          // }
         }
         catch(error){
           console.log(error)
@@ -62,6 +61,7 @@ const AddCategory = () => {
     <div className="flex justify-center">
         <div className="flex flex-col justify-center relative top-20">
             <h2 className="flex justify-center mb-5 text-20px">Adicione a sua expense</h2>
+            <p>{categoryId}</p>
             <form onSubmit={handleCreateCategory}>
                     <div id='white-transparent-container'className="flex flex-col w-80 " style={{height:'350px',background:'rgba(255, 255, 255, 0.5)',borderRadius:'25px'}}>
                         
