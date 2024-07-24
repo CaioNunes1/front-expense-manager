@@ -15,35 +15,53 @@ const AddCategory = () => {
     const handleCreateCategory=async (event:React.FormEvent<HTMLFormElement>)=>{
     event.preventDefault()
     if(userId!==null){
-      const responseCategory=await createCategory({name,userId})      
+      const responseCategory=await createCategory({name,userId})     
+      
+      //setCategoryId(responseCategory)
 
+//      console.log(responseCategory)
 
       if(responseCategory!==null){
-        //pegando o id da categoria criada para passar para a expense
-        const responseGetcateegoryId=await getCategoryId({name,userId});
-
-        setCategoryId(responseGetcateegoryId);
-        console.log('Setando id para criar expense')
-
-        try{
-          //const responseExpense=await createExpense({amount,description,categoryId,userId});
-    
-          // if(responseExpense!==null){
-          //   console.log(responseExpense)
-          //   alert('Expense criada');
-          //   navigate('/Home')
-          // }
-        }
-        catch(error){
-          console.log(error)
-        }
+        console.log("categoria criada")
       }
       else{
         alert('Erro ao criar categoria')
       }
 
+      setTimeout(()=>{
+        handleCreateExpense()
+      },2000)
+      
+
 
     }
+  }
+
+  const handleCreateExpense=async()=>{
+    //pegando o id da categoria criada para passar para a expense
+    if(userId){
+      const responseGetcategoryId=await getCategoryId({name,userId});
+      
+
+    setCategoryId(responseGetcategoryId+1);
+
+    try{
+      if(categoryId>0){
+        const responseExpense=await createExpense({amount,description,categoryId,userId});
+
+        if(categoryId>0){
+          console.log(responseExpense)
+          alert('Expense criada categoria');
+          navigate('/Home')
+        }
+      }
+      
+    }
+    catch(error){
+      console.log(error)
+    }
+    }
+    
   }
 
   const handleNumberChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
