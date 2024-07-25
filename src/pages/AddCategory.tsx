@@ -43,7 +43,7 @@ const AddCategory = () => {
       const responseGetcategoryId=await getCategoryId({name,userId});
       
 
-    setCategoryId(responseGetcategoryId+1);
+    setCategoryId(responseGetcategoryId-1);
 
     try{
       if(categoryId>0){
