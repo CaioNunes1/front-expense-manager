@@ -11,30 +11,38 @@ const AddCategory = () => {
     const userId=getUserId();
     const navigate=useNavigate();
     //let categoryId;
+
+    function handleInputName(event:React.ChangeEvent<HTMLInputElement>){
+      setCategoryCreated(event.target.value)
+    }
+    function handleDescription(event:React.ChangeEvent<HTMLInputElement>){
+      setDescription(event.target.value)
+    }
     
     const handleCreateCategory=async (event:React.FormEvent<HTMLFormElement>)=>{
     event.preventDefault()
-    if(userId!==null){
-      const responseCategory=await createCategory({name,userId})     
-      
-      //setCategoryId(responseCategory)
-
-//      console.log(responseCategory)
-
-      if(responseCategory!==null){
-        console.log("categoria criada")
+    try{
+      if(userId!==null){
+        const responseCategory=await createCategory({name,userId})     
+  
+        if(responseCategory!==null){
+          alert("categoria criada")
+          await handleCreateExpense()
+        }
+        else{
+          alert('Erro ao criar categoria')
+        }
+        
       }
-      else{
-        alert('Erro ao criar categoria')
-      }
-
-      setTimeout(()=>{
-        handleCreateExpense()
-      },2000)
-      
-
-
     }
+    catch(e){
+      console.log(e);
+    }
+    if(event){
+      console.log('event')
+    }
+
+    
   }
 
   const handleCreateExpense=async()=>{
@@ -43,7 +51,7 @@ const AddCategory = () => {
       const responseGetcategoryId=await getCategoryId({name,userId});
       
 
-    setCategoryId(responseGetcategoryId-1);
+    setCategoryId(responseGetcategoryId);
 
     try{
       if(categoryId>0){
@@ -51,7 +59,7 @@ const AddCategory = () => {
 
         if(categoryId>0){
           console.log(responseExpense)
-          alert('Expense criada categoria');
+        alert(`Expense criada categoria ${name}`);
           navigate('/Home')
         }
       }
@@ -87,14 +95,14 @@ const AddCategory = () => {
                             <label htmlFor="">Nome</label>
                             <input type="text" value={name} placeholder="Digite o nome da Expense" className="h-10 w-60 " 
                             style={{borderRadius:'10px', color:'black', background:'rgba(255, 255, 255, 0.5)'}}  
-                            onChange={(e)=>setCategoryCreated(e.target.value)}/>
+                            onChange={handleInputName}/>
                         </div>
 
                         <div className="flex flex-col relative left-9 top-14">
                             <label htmlFor="">Descrição</label>
                             <input type="text" value={description} placeholder="Digite a descrição da dispesa" className="h-10 w-60" 
                             style={{borderRadius:'10px', color:'black', background:'rgba(255, 255, 255, 0.5)'}}
-                            onChange={(e)=>setDescription(e.target.value)} />
+                            onChange={handleDescription} />
                         </div>
 
                         <div className="flex flex-col relative left-9 top-24">
