@@ -57,6 +57,8 @@ const AddCategory = () => {
       if(categoryId>0){
         const responseExpense=await createExpense({amount,description,categoryId,userId});
 
+        console.log(responseExpense);
+
         if(categoryId>0){
           console.log(responseExpense)
         alert(`Expense criada categoria ${name}`);
