@@ -9,7 +9,7 @@ const SignIn = () => {
     const[exists,setExists]=useState(false);
     const navigate=useNavigate();
 
-    const handleLogin= async(event:React.FormEvent<HTMLFormElement>)=>{
+    const handleLogin= async(event:React.FormEvent<HTMLButtonElement>)=>{
         event.preventDefault();
 
         try{
@@ -29,6 +29,7 @@ const SignIn = () => {
                 localStorage.setItem('userId',resultGetuser.toString())
                 
                 alert('Logado com sucesso')
+                navigate('/Home');
                 
             }
             else if(result?.access_token===403){
@@ -43,10 +44,7 @@ const SignIn = () => {
         catch(error){
             console.log(error)
         }
-
-        if(exists){
-            navigate('/Home')
-        }
+        
     }
   return (
     <div className="flex flex-col">
@@ -57,7 +55,7 @@ const SignIn = () => {
     <div className="flex justify-center">
         <div className="flex flex-col justify-center relative top-20">
             <h2 className="flex justify-center mb-5 text-20px">Entre na sua conta</h2>
-            <form onSubmit={handleLogin}>
+            {/* <form onSubmit={handleLogin}> */}
                     <div id='white-transparent-container'className="flex flex-col h-72 w-80 " style={{background:'rgba(255, 255, 255, 0.5)',borderRadius:'25px'}}>
                         
                         <div className="flex flex-col relative left-9 top-12" style={{position:"relative",}}>
@@ -74,11 +72,13 @@ const SignIn = () => {
                     </div>
 
                     <div id='Button' className="flex justify-center relative top-10">
-                    <button className="h-12 w-60 bg-white hover:bg-gray-300" 
-                        style={{color:'#251893', borderRadius:'40px'}} >Login</button>
+                    <button 
+                    className="h-12 w-60 bg-white hover:bg-gray-300" 
+                    style={{color:'#251893', borderRadius:'40px'}}
+                    onClick={handleLogin} >Login</button>
                     </div>
 
-                </form>
+                {/* </form> */}
 
             <div className="flex relative top-20 justify-center">
                 <a href="SignUp" className="hover:bg-gray-400 p-2 rounded">Não tem cadastro? Cadastre-se Aqui </a>

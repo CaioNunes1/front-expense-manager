@@ -19,7 +19,7 @@ const AddCategory = () => {
       setDescription(event.target.value)
     }
     
-    const handleCreateCategory=async (event:React.FormEvent<HTMLFormElement>)=>{
+    const handleCreateCategory=async (event:React.FormEvent<HTMLButtonElement>)=>{
     event.preventDefault()
     try{
       if(userId!==null){
@@ -90,7 +90,7 @@ const AddCategory = () => {
         <div className="flex flex-col justify-center relative top-20">
             <h2 className="flex justify-center mb-5 text-20px">Adicione a sua expense</h2>
             <p>{categoryId}</p>
-            <form onSubmit={handleCreateCategory}>
+            {/* <form onSubmit={handleCreateCategory}> */}
                     <div id='white-transparent-container'className="flex flex-col w-80 " style={{height:'350px',background:'rgba(255, 255, 255, 0.5)',borderRadius:'25px'}}>
                         
                         <div className="flex flex-col relative left-9 top-6" style={{position:"relative",}}>
@@ -116,11 +116,13 @@ const AddCategory = () => {
                     </div>
 
                     <div id='Button' className="flex justify-center relative top-10">
-                    <button className="h-12 w-60 bg-white hover:bg-gray-300" 
-                        style={{color:'#251893', borderRadius:'40px'}} >Add</button>
+                    <button 
+                      className="h-12 w-60 bg-white hover:bg-gray-300" 
+                      style={{color:'#251893', borderRadius:'40px'}}
+                      onClick={handleCreateCategory} >Add</button>
                     </div>
 
-                </form>
+                {/* </form> */}
         </div>
       </div>
 
