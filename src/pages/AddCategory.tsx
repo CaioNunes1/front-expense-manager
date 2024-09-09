@@ -26,7 +26,7 @@ const AddCategory = () => {
         const responseCategory=await createCategory({name,userId})     
   
         if(responseCategory!==null){
-          alert("categoria criada")
+          //alert("categoria criada")
           await handleCreateExpense()
         }
         else{
@@ -48,28 +48,37 @@ const AddCategory = () => {
   const handleCreateExpense=async()=>{
     //pegando o id da categoria criada para passar para a expense
     if(userId){
-      const responseGetcategoryId=await getCategoryId({name,userId});
-      
+      try{
+        const responseGetcategoryId=await getCategoryId({name,userId});
+        
+        if(responseGetcategoryId){
+          setCategoryId(responseGetcategoryId);//atualiza o categoryId
 
-    setCategoryId(responseGetcategoryId);
-
-    try{
-      if(categoryId>0){
-        const responseExpense=await createExpense({amount,description,categoryId,userId});
-
-        console.log(responseExpense);
-
-        if(categoryId>0){
-          console.log(responseExpense)
-        alert(`Expense criada categoria ${name}`);
-          navigate('/Home')
+          if(responseGetcategoryId > 0){
+            const responseExpense=await createExpense({amount,description,categoryId,userId});
+  
+            console.log(responseExpense);
+  
+            if(responseExpense){
+              console.log(responseExpense)
+              alert(`Expense criada categoria ${name}`);
+              navigate('/Home')
+            }
+          }
+          else {
+            alert('Erro ao obter o ID da categoria');
+          }
         }
-      }
+        else {
+          alert('Erro ao buscar categoria');
+        }
+        
+
       
-    }
-    catch(error){
-      console.log(error)
-    }
+      }
+      catch(error){
+        console.log(error)
+      }
     }
     
   }
