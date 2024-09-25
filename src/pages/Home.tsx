@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { getCategory } from "../services/category";
 import { getUserId } from "../hooks/hook.userId";
 import { useNavigate } from "react-router-dom";
-
+import  Card  from "../components/Card";
 const Home = () => {
 //assim que faz para quando tem que se passar um props no elemento
   interface DtoCategory{
@@ -82,7 +82,9 @@ const Home = () => {
             {categories.map((category,index)=>(
               <div>
                 <li key={index} >
-                  <a >{category.name}</a> 
+                  <Card title={category.name}/>
+                  <a ></a> 
+                  
                   </li>
                   {menuOpen &&(
                     <div className="flex">
