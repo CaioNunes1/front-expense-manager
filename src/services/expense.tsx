@@ -7,11 +7,12 @@ interface DtoExpense{
     userId:number,
 }
 
-export async function getExpense(userId:number){
+export async function getExpense(userId:number,name:string){
     try{
         const response=await api.get('expenses/getUserExpensesById',{
         params:{//usa o params para quando for parametro, e não for um objeto
             userId:userId,
+            name:name
         }    
         })
         return response.data
