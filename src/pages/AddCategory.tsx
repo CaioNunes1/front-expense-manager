@@ -3,6 +3,7 @@ import { createCategory, getCategoryId } from "../services/category";
 import { getUserId } from "../hooks/hook.userId";
 import { createExpense } from "../services/expense";
 import { useNavigate } from "react-router-dom";
+import BackIcon from "../components/BackIcon";
 const AddCategory = () => {
     const[name,setCategoryCreated]=useState('');
     const[description,setDescription]=useState('');
@@ -92,7 +93,13 @@ const AddCategory = () => {
   return (
     <div className="flex flex-col">
       <div className="flex justify-center">
-        <h1 className="text-25px ml-5 mt-4">Expense Manager</h1>
+        <div className="flex flex-row">
+          <a onClick={()=>navigate('/Home')}>
+          <BackIcon/>
+          </a>
+          <h1 className="text-25px mt-4">Expense Manager</h1>
+          
+        </div>
       </div>  
 
     <div className="flex justify-center">

@@ -7,7 +7,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ title }) => {
   return (
-    <div className="w-80 h-14 mx-auto shadow-lg rounded-lg p-6" 
+    <div className="flex justify-center w-80 h-14 mx-auto shadow-lg rounded-lg p-6" 
       style={{paddingTop:'16px',
       background:'rgba(255,255,255,0.5)'
       ,borderRadius:'2px'}}>

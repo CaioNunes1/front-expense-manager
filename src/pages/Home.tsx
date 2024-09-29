@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import  Card  from "../components/Card";
 import { getExpense } from "../services/expense";
 import { getCategoryId } from "../services/category";
+import BackIcon from "../components/BackIcon";
 const Home = () => {
 //assim que faz para quando tem que se passar um props no elemento
   interface DtoCategory{
@@ -110,7 +111,7 @@ const Home = () => {
   return (
     <div className="flex flex-col">
       <h2 className='flex justify-center relative top-6 text-25px'>Manager Expense</h2>
-
+        
       <div className="flex flex-col items-center relative top-32">
         {/* <label className="flex relative bottom-12">Adicione uma categoria</label> */}
         <form onSubmit={AddCategory}>
