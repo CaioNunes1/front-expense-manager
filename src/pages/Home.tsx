@@ -4,6 +4,7 @@ import { getUserId } from "../hooks/hook.userId";
 import { useNavigate } from "react-router-dom";
 import  Card  from "../components/Card";
 import { getExpense } from "../services/expense";
+import { getCategoryId } from "../services/category";
 const Home = () => {
 //assim que faz para quando tem que se passar um props no elemento
   interface DtoCategory{
@@ -20,17 +21,16 @@ const Home = () => {
   //const[name,setCategoryCreated]=useState('');
   const navigate=useNavigate()
   const[showCategorieDetails,setShowCategorieDetails]=useState(false);
+  const[categories,setCategories]=useState<DtoCategory[]>([]);
+  const[expense,setExpense]=useState<DtoExpense>();
+  const[name,setName]=useState('');
+  const[categoryId,setCategoryId]=useState<number>(0)
+  
+  const userId=getUserId();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
-
-  const[categories,setCategories]=useState<DtoCategory[]>([]);
-  const[expense,setExpense]=useState<DtoExpense[]>([]);
-  const[categoryName,setCateryName]=useState('')
-  
-  const userId=getUserId();
 
 
   useEffect(()=>{
@@ -62,15 +62,40 @@ const Home = () => {
   }
 
   const clickCategorie=(name:string)=>{
-    setShowCategorieDetails(true);
-    setCateryName(name);
-    getExpenseHome();
+    //console.log(name,"nome e",userId,"userId");
+    setShowCategorieDetails(prev=>!prev);
+    setName(name);
+    
+    callHandle(name);
+    //getExpenseHome();
   }
 
-  const getExpenseHome =async()=>{
+  const callHandle=async(name:string)=>{
+    await handleGetCategoryId(name);
+  }
+
+  const handleGetCategoryId = async (name:string) => {
+    try {
+      if (userId) {
+        console.log(name,"name",userId,"userId handleGetCategoryId")
+        const response = await getCategoryId({ name, userId });
+        if (response && response > 0) {
+          setCategoryId(response);
+          await getExpenseHome(response); // Usa o response diretamente
+        }
+      } else {
+        console.log(userId, "vazio");
+      }
+    } catch (e) {
+      console.log("erro", e);
+    }
+  };
+  
+
+  const getExpenseHome =async(categoryId:number)=>{
     if(userId!=null){
       try{
-        const response=await getExpense(userId,categoryName)
+        const response=await getExpense(userId,categoryId)
         setExpense(response);
       }
       catch(e){
@@ -80,7 +105,6 @@ const Home = () => {
     }
     
   }
-  
   
 
   return (
@@ -104,19 +128,16 @@ const Home = () => {
         </form>
 
           <h2>Expenses Categories</h2>
-          {showCategorieDetails  ? (
+          {/* { showCategorieDetails  ? (
                     <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'400px', 
                       borderRadius:'30px',
                       background:'rgba(255,255,255,0.5)'
                       }}>
-                        {expense.map((expense)=>(
-                          <div>
-                            {expense.amount}
-                            {expense.description}
-                          </div>
-                        ))}
+                        Valor: {expense?.amount}
+                        <br />
+                        Descrição da despesa:{expense?.description}
                     </div>
-                  ) :(
+                  ) :( */}
         <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'400px', 
           borderRadius:'30px'}}>
           <ul className="flex flex-col" style={{cursor:'pointer'}} onClick={toggleMenu} >
@@ -128,11 +149,20 @@ const Home = () => {
                   </a> 
                   
                   </li>
+                  {showCategorieDetails && name === category.name && (
+                  <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'50px', 
+                      borderRadius:'5px',
+                      background:'rgba(255,255,255,0.5)'}}
+                      onClick={()=>setShowCategorieDetails(prev=>!prev)}>
+                      Valor: {expense?.amount}
+                      <br />
+                      Descrição da despesa:{expense?.description}
+                  </div>)}
               </div>
-            ))}
+            ))} 
           </ul>
+          
         </div>
-        )}
       </div>
       
     </div>

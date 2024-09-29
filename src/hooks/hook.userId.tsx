@@ -2,7 +2,7 @@
   
   export const getUserId = (): number | null => {
     const userId = localStorage.getItem('userId');
-    console.log('userId from localStorage:', userId); // Adicione um log para verificar o valor
+    //console.log('userId from localStorage:', userId); // Adicione um log para verificar o valor
     return userId ? parseInt(userId, 10) : null;
   };
   /* (): number | null: Especifica que a função retorna
