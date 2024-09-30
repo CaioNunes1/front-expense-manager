@@ -110,8 +110,11 @@ const Home = () => {
 
   return (
     <div className="flex flex-col">
+
       <h2 className='flex justify-center relative top-6 text-25px'>Manager Expense</h2>
-        
+      <div className="flex relative left-5 bottom-1" onClick={()=>navigate('/SignIn')}>
+        <BackIcon/>
+      </div>        
       <div className="flex flex-col items-center relative top-32">
         {/* <label className="flex relative bottom-12">Adicione uma categoria</label> */}
         <form onSubmit={AddCategory}>
@@ -151,7 +154,7 @@ const Home = () => {
                   
                   </li>
                   {showCategorieDetails && name === category.name && (
-                  <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'50px', 
+                  <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'auto', 
                       borderRadius:'5px',
                       background:'rgba(255,255,255,0.5)'}}
                       onClick={()=>setShowCategorieDetails(prev=>!prev)}>

@@ -28,7 +28,7 @@ const AddCategory = () => {
   
         if(responseCategory!==null){
           //alert("categoria criada")
-          await handleCreateExpense()
+          await handleGetCategoryId()
         }
         else{
           alert('Erro ao criar categoria')
@@ -46,7 +46,7 @@ const AddCategory = () => {
     
   }
 
-  const handleCreateExpense=async()=>{
+  const handleGetCategoryId=async()=>{
     //pegando o id da categoria criada para passar para a expense
     if(userId){
       try{
@@ -56,15 +56,7 @@ const AddCategory = () => {
           setCategoryId(responseGetcategoryId);//atualiza o categoryId
 
           if(responseGetcategoryId > 0){
-            const responseExpense=await createExpense({amount,description,categoryId,userId});
-  
-            console.log(responseExpense);
-  
-            if(responseExpense){
-              console.log(responseExpense)
-              alert(`Expense criada categoria ${name}`);
-              navigate('/Home')
-            }
+            await handleCreateExpense(responseGetcategoryId);
           }
           else {
             alert('Erro ao obter o ID da categoria');
@@ -84,6 +76,21 @@ const AddCategory = () => {
     
   }
 
+  const handleCreateExpense=async(categoryId:number)=>{
+    if(userId){
+      const responseExpense=await createExpense({amount,description,categoryId,userId});
+  
+            console.log(responseExpense);
+  
+            if(responseExpense){
+              console.log(responseExpense)
+              alert(`Expense criada categoria ${name}`);
+              navigate('/Home')
+            }
+    }
+    
+  }
+
   const handleNumberChange=(e:React.ChangeEvent<HTMLInputElement>)=>{
     const numValue=parseInt(e.target.value,10)//10 no final para flar que é um númereo decimal
     //usando o parseInt para converter o valor digitado que sempre será uma string para um number
@@ -94,8 +101,11 @@ const AddCategory = () => {
     <div className="flex flex-col">
       <div className="flex justify-center">
         <div className="flex flex-row">
-          <a onClick={()=>navigate('/Home')}>
-          <BackIcon/>
+          <a style={{display:'flex', 
+            position:'relative',
+            right:'32px',
+            top:'24px'}} onClick={()=>navigate('/Home')}>
+            <BackIcon/>
           </a>
           <h1 className="text-25px mt-4">Expense Manager</h1>
           
