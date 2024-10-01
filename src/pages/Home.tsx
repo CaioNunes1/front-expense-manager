@@ -149,7 +149,7 @@ const Home = () => {
               <div>
                 <li key={index} >
                   <a onClick={()=>clickCategorie(category.name)} >
-                  <Card title={category.name}/>
+                    <Card title={category.name}/>
                   </a> 
                   
                   </li>
