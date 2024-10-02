@@ -6,6 +6,7 @@ import  Card  from "../components/Card";
 import { getExpense } from "../services/expense";
 import { getCategoryId } from "../services/category";
 import BackIcon from "../components/BackIcon";
+import ThreePoints from "../components/ThreePoints";
 const Home = () => {
 //assim que faz para quando tem que se passar um props no elemento
   interface DtoCategory{
@@ -146,15 +147,15 @@ const Home = () => {
           borderRadius:'30px'}}>
           <ul className="flex flex-col" style={{cursor:'pointer'}} onClick={toggleMenu} >
             {categories.map((category,index)=>(
-              <div>
+              <div className="">
                 <li key={index} >
-                  <a onClick={()=>clickCategorie(category.name)} >
-                    <Card title={category.name}/>
-                  </a> 
+                  {/* <a onClick={()=>clickCategorie(category.name)} > */}
+                    <Card title={category.name} onClick={()=>clickCategorie(category.name)}/>
+                  {/* </a>  */}
                   
                   </li>
                   {showCategorieDetails && name === category.name && (
-                  <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'auto', 
+                  <div className='flex justify-center relative left-5 w-80' style={{height:'auto', 
                       borderRadius:'5px',
                       background:'rgba(255,255,255,0.5)'}}
                       onClick={()=>setShowCategorieDetails(prev=>!prev)}>
@@ -163,7 +164,8 @@ const Home = () => {
                       Descrição da despesa:{expense?.description}
                   </div>)}
               </div>
-            ))} 
+            ))}
+             
           </ul>
           
         </div>
