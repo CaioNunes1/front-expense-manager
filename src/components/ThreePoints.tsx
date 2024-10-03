@@ -1,13 +1,15 @@
 import React from 'react'
+interface Props{
+  onClick?:()=>void;
+}
+const ThreePoints:React.FC<Props> = ({onClick}) => {
 
-const ThreePoints = () => {
-
-    const handleClick=()=>{
-        console.log('foi clicado');
-    }
+    // const handleClick=()=>{
+    //     console.log('foi clicado');
+    // }
 
   return (
-      <div onClick={handleClick} id='Three points' className='flex relative right-10 z-10
+      <div onClick={onClick} id='Three points' className='flex relative right-10 z-10
       rounded-full p-1 hover:bg-gray-200 hover:shadow-lg transition-all duration-200 ease-in-out'>
         <button className="text-gray-900 hover:text-gray-700 focus:outline-none">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-9 h-9">

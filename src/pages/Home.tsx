@@ -6,7 +6,6 @@ import  Card  from "../components/Card";
 import { getExpense } from "../services/expense";
 import { getCategoryId } from "../services/category";
 import BackIcon from "../components/BackIcon";
-import ThreePoints from "../components/ThreePoints";
 const Home = () => {
 //assim que faz para quando tem que se passar um props no elemento
   interface DtoCategory{
@@ -26,13 +25,19 @@ const Home = () => {
   const[categories,setCategories]=useState<DtoCategory[]>([]);
   const[expense,setExpense]=useState<DtoExpense>();
   const[name,setName]=useState('');
-  const[categoryId,setCategoryId]=useState<number>(0)
+  const[categoryId,setCategoryId]=useState<number>(0);
+  const[clickThreePoints,setClickThreePoints]=useState(false);
   
   const userId=getUserId();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  const handleClickThreePoints=()=>{
+    setClickThreePoints(prev=>!prev);
+    console.log(clickThreePoints)
+  }
 
 
   useEffect(()=>{
@@ -150,7 +155,9 @@ const Home = () => {
               <div className="">
                 <li key={index} >
                   {/* <a onClick={()=>clickCategorie(category.name)} > */}
-                    <Card title={category.name} onClick={()=>clickCategorie(category.name)}/>
+                    <Card title={category.name} 
+                      onClick={()=>clickCategorie(category.name)} 
+                      onClickThreePoints={handleClickThreePoints}/>
                   {/* </a>  */}
                   
                   </li>
@@ -163,6 +170,7 @@ const Home = () => {
                       <br />
                       Descrição da despesa:{expense?.description}
                   </div>)}
+                  {clickThreePoints}
               </div>
             ))}
              
