@@ -170,11 +170,15 @@ const Home = () => {
                       <br />
                       Descrição da despesa:{expense?.description}
                   </div>)}
-                  {clickThreePoints}
               </div>
             ))}
-             
           </ul>
+          {clickThreePoints && (
+                    <div className="flex relative right-20 w-1 h-10" style={{backgroundColor:'white',zIndex:'5'}}>
+                      teste
+                    </div>
+                    
+                  )}
           
         </div>
       </div>
