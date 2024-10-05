@@ -27,15 +27,18 @@ const Home = () => {
   const[name,setName]=useState('');
   const[categoryId,setCategoryId]=useState<number>(0);
   const[clickThreePoints,setClickThreePoints]=useState(false);
-  
+  const[activeCategory,setActiveCategory]=useState<string | null>(null)
   const userId=getUserId();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const handleClickThreePoints=()=>{
-    setClickThreePoints(prev=>!prev);
+  const handleClickThreePoints=( categoryName:string)=>{
+      setActiveCategory(categoryName);
+      setClickThreePoints(prev=>!prev);
+      
+    
     console.log(clickThreePoints)
   }
 
@@ -152,33 +155,37 @@ const Home = () => {
           borderRadius:'30px'}}>
           <ul className="flex flex-col" style={{cursor:'pointer'}} onClick={toggleMenu} >
             {categories.map((category,index)=>(
-              <div className="">
+              <div className="relative">
                 <li key={index} >
                   {/* <a onClick={()=>clickCategorie(category.name)} > */}
                     <Card title={category.name} 
                       onClick={()=>clickCategorie(category.name)} 
-                      onClickThreePoints={handleClickThreePoints}/>
+                      onClickThreePoints={()=>handleClickThreePoints(category.name)}/>
                   {/* </a>  */}
                   
                   </li>
                   {showCategorieDetails && name === category.name && (
-                  <div className='flex justify-center relative left-5 w-80' style={{height:'auto', 
-                      borderRadius:'5px',
-                      background:'rgba(255,255,255,0.5)'}}
-                      onClick={()=>setShowCategorieDetails(prev=>!prev)}>
-                      Valor: {expense?.amount}
-                      <br />
-                      Descrição da despesa:{expense?.description}
-                  </div>)}
+                    <div className="block">
+                      <div className='flex justify-center relative left-5 w-80' style={{height:'auto', 
+                          borderRadius:'5px',
+                          background:'rgba(255,255,255,0.5)'}}
+                          onClick={()=>setShowCategorieDetails(prev=>!prev)}>
+                          Valor: {expense?.amount}
+                          <br />
+                          Descrição da despesa:{expense?.description}
+                      </div>
+                  </div>
+                  )}
+                  
+                    {clickThreePoints && activeCategory === category.name && (
+                        <div className="absolute flex-row bottom-2 left-44 w-32 h-12 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
+                          <p style={{color:'black'}}>Opção 1</p>
+                          <p style={{color:'black'}}>Opção 2</p>
+                        </div>
+                    )}
               </div>
             ))}
           </ul>
-          {clickThreePoints && (
-                    <div className="flex relative right-20 w-1 h-10" style={{backgroundColor:'white',zIndex:'5'}}>
-                      teste
-                    </div>
-                    
-                  )}
           
         </div>
       </div>
