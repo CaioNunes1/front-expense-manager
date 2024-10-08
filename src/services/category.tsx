@@ -47,3 +47,13 @@ export const getCategoryId = async({name,userId}:DtoCategory)=>{
         console.log(e);
     }
 }
+
+export const updateCategory=async({name,userId}:DtoCategory,newName:string)=>{
+    try{
+        const response=await api.post(`category/updateCategory?newName=${newName}`,{name,userId})
+        return response.data;
+    }
+    catch(e){
+        console.log(e)
+    }
+}

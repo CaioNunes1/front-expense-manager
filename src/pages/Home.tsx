@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getCategory } from "../services/category";
+import { getCategory, updateCategory } from "../services/category";
 import { getUserId } from "../hooks/hook.userId";
 import { useNavigate } from "react-router-dom";
 import  Card  from "../components/Card";
@@ -49,7 +49,7 @@ const Home = () => {
         try{
           const categories=await getCategory(userId)
           setCategories(categories)
-          console.log(categories);
+          //console.log(categories);
         }
         catch(error){
           console.log(error)
@@ -115,7 +115,21 @@ const Home = () => {
     }
     
   }
-  
+
+  const handleUpdateCategory= async(name:string)=>{
+    try{
+      if(userId){
+        const response=await updateCategory({name,userId});
+      }
+      
+    }
+    catch(e){
+      console.log(e,'erro ao fazer requisição');
+    }
+  }
+  const handleUpdateExpense= async()=>{
+    console.log('chamou a função');
+  }
 
   return (
     <div className="flex flex-col">
@@ -178,9 +192,9 @@ const Home = () => {
                   )}
                   
                     {clickThreePoints && activeCategory === category.name && (
-                        <div className="absolute flex-row bottom-2 left-44 w-32 h-12 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
-                          <p style={{color:'black'}}>Opção 1</p>
-                          <p style={{color:'black'}}>Opção 2</p>
+                        <div className="absolute flex-row bottom-2 left-40 w-36 h-12 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
+                          <p style={{color:'black'}} onClick={()=>handleUpdateCategory(category.name)}>Editar Categoria</p>
+                          <p style={{color:'black'}} onClick={handleUpdateExpense}>Editar Expense</p>
                         </div>
                     )}
               </div>
