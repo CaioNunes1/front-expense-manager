@@ -5,9 +5,12 @@ interface CardProps {
   onClick?: ()=>void;
   //description: string;
   onClickThreePoints?: ()=>void;
+
 }
 
 const Card: React.FC<CardProps> = ({ title, onClick, onClickThreePoints }) => {
+
+
   return (
     <div className='flex'>
       <div className="flex justify-between relative left-5 w-80 h-14 mx-auto shadow-lg rounded-lg p-6" 
@@ -16,7 +19,8 @@ const Card: React.FC<CardProps> = ({ title, onClick, onClickThreePoints }) => {
         ,borderRadius:'2px'}}
         onClick={onClick}
         >
-        <h2 className="text-1xl font-bold " style={{color:'black'}}>{title}</h2>
+            <h2 className="text-1xl font-bold " style={{color:'black'}}>{title}</h2>
+        
 
       </div>
       <ThreePoints onClick={onClickThreePoints} />

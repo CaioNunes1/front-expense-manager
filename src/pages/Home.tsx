@@ -18,7 +18,6 @@ const Home = () => {
     categoryId:number,
     userId:number,
   }
-  const[menuOpen,setMenuOpen]=useState(false)
   //const[name,setCategoryCreated]=useState('');
   const navigate=useNavigate()
   const[showCategorieDetails,setShowCategorieDetails]=useState(false);
@@ -29,17 +28,15 @@ const Home = () => {
   const[clickThreePoints,setClickThreePoints]=useState(false);
   const[activeCategory,setActiveCategory]=useState<string | null>(null)
   const userId=getUserId();
+  const [editingCategory, setEditingCategory] = useState<string | null>(null);
+  const [newCategoryName, setNewCategoryName] = useState<string>("");
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+
 
   const handleClickThreePoints=( categoryName:string)=>{
       setActiveCategory(categoryName);
       setClickThreePoints(prev=>!prev);
       
-    
-    console.log(clickThreePoints)
   }
 
 
@@ -87,7 +84,7 @@ const Home = () => {
   const handleGetCategoryId = async (name:string) => {
     try {
       if (userId) {
-        console.log(name,"name",userId,"userId handleGetCategoryId")
+        //console.log(name,"name",userId,"userId handleGetCategoryId")
         const response = await getCategoryId({ name, userId });
         if (response && response > 0) {
           setCategoryId(response);
@@ -115,16 +112,28 @@ const Home = () => {
     }
     
   }
+  const handleEditClick = (categoryName: string) => {
+    setEditingCategory(categoryName); // Ativa o modo de edição para a categoria clicada
+    setNewCategoryName(categoryName); // Preenche o campo de input com o nome atual da categoria
+  };
 
-  const handleUpdateCategory= async(name:string)=>{
+  const handleUpdateCategory= async(name:string,newName:string)=>{
+    setClickThreePoints(false);
     try{
       if(userId){
-        const response=await updateCategory({name,userId});
+        const response=await updateCategory({name,userId},newName);
+//        setIsEditing(false);
+        alert(`Categoria foi editada para ${response.data}`);
+        window.location.reload();
+        
       }
       
     }
     catch(e){
       console.log(e,'erro ao fazer requisição');
+    }
+    finally{
+      setEditingCategory(null);
     }
   }
   const handleUpdateExpense= async()=>{
@@ -154,29 +163,30 @@ const Home = () => {
           </div>
         </form>
 
-          <h2>Expenses Categories</h2>
-          {/* { showCategorieDetails  ? (
-                    <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'400px', 
-                      borderRadius:'30px',
-                      background:'rgba(255,255,255,0.5)'
-                      }}>
-                        Valor: {expense?.amount}
-                        <br />
-                        Descrição da despesa:{expense?.description}
-                    </div>
-                  ) :( */}
+      <h2>Expenses Categories</h2>
         <div className='flex justify-center w-80 overflow-y-scroll' style={{height:'400px', 
           borderRadius:'30px'}}>
-          <ul className="flex flex-col" style={{cursor:'pointer'}} onClick={toggleMenu} >
+          <ul className="flex flex-col" style={{cursor:'pointer'}} >
             {categories.map((category,index)=>(
               <div className="relative">
                 <li key={index} >
-                  {/* <a onClick={()=>clickCategorie(category.name)} > */}
-                    <Card title={category.name} 
+                  {editingCategory ===category.name ?(
+                    <input type="text"
+                    value={newCategoryName}
+                    onChange={(e)=>setNewCategoryName(e.target.value)}
+                    onBlur={()=>handleUpdateCategory(category.name,newCategoryName)}
+                    className="flex relative left-5 bg-transparent text-black font-bold focus:outline-none"
+                    style={{paddingTop:'16px',
+                    background:'rgba(255,255,255,0.5)',
+                    borderRadius:'2px',width:'320px',}}
+                    />
+                  ) :
+                    (
+                      <Card title={category.name} 
                       onClick={()=>clickCategorie(category.name)} 
                       onClickThreePoints={()=>handleClickThreePoints(category.name)}/>
-                  {/* </a>  */}
                   
+                  )}
                   </li>
                   {showCategorieDetails && name === category.name && (
                     <div className="block">
@@ -193,7 +203,7 @@ const Home = () => {
                   
                     {clickThreePoints && activeCategory === category.name && (
                         <div className="absolute flex-row bottom-2 left-40 w-36 h-12 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
-                          <p style={{color:'black'}} onClick={()=>handleUpdateCategory(category.name)}>Editar Categoria</p>
+                          <p style={{color:'black'}} onClick={()=>handleEditClick(category.name)}>Editar Categoria</p>
                           <p style={{color:'black'}} onClick={handleUpdateExpense}>Editar Expense</p>
                         </div>
                     )}
