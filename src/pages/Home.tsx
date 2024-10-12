@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getCategory, updateCategory } from "../services/category";
+import { deleteCategory, getCategory, updateCategory } from "../services/category";
 import { getUserId } from "../hooks/hook.userId";
 import { useNavigate } from "react-router-dom";
 import  Card  from "../components/Card";
@@ -123,7 +123,7 @@ const Home = () => {
       if(userId){
         const response=await updateCategory({name,userId},newName);
 //        setIsEditing(false);
-        alert(`Categoria foi editada para ${response.data}`);
+        alert(`Categoria foi editada para ${response}`);
         window.location.reload();
         
       }
@@ -138,6 +138,20 @@ const Home = () => {
   }
   const handleUpdateExpense= async()=>{
     console.log('chamou a função');
+  }
+
+  const handleDeleteCategory=async(name:string)=>{
+    try{
+      if(userId){
+      const response = await deleteCategory({name,userId});
+      alert(`Cateria deleteda ${name}`);
+      window.location.reload();
+      return response;
+      }
+    } 
+    catch(e){
+      console.log(e);
+    }
   }
 
   return (
@@ -202,9 +216,10 @@ const Home = () => {
                   )}
                   
                     {clickThreePoints && activeCategory === category.name && (
-                        <div className="absolute flex-row bottom-2 left-40 w-36 h-12 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
+                        <div className="absolute flex-row bottom-2 left-36 w-40 h-18 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
                           <p style={{color:'black'}} onClick={()=>handleEditClick(category.name)}>Editar Categoria</p>
                           <p style={{color:'black'}} onClick={handleUpdateExpense}>Editar Expense</p>
+                          <p style={{color:'black'}} onClick={()=>handleDeleteCategory(category.name)}> Apagar Categoria</p>
                         </div>
                     )}
               </div>

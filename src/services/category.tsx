@@ -57,3 +57,16 @@ export const updateCategory=async({name,userId}:DtoCategory,newName:string)=>{
         console.log(e)
     }
 }
+
+export const deleteCategory=async({name,userId}:DtoCategory)=>{
+    try{
+        const response= await api.delete('category/delete', {
+            params:{name,userId}
+        })
+        return response.data;
+    }
+    catch(e){
+        console.log(e);
+    }
+
+}
