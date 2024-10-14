@@ -32,3 +32,14 @@ export async function createExpense({amount,description,categoryId,userId}:DtoEx
     }
     
 }
+
+export const updateExpense=async({categoryId,amount,description}:DtoExpense)=>{
+    try{
+        const response= await api.put('expense/update',{categoryId,amount,description});
+        return response.data;
+    }
+    catch(e){
+        console.log(e);
+    }
+    
+}

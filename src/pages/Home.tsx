@@ -3,7 +3,7 @@ import { deleteCategory, getCategory, updateCategory } from "../services/categor
 import { getUserId } from "../hooks/hook.userId";
 import { useNavigate } from "react-router-dom";
 import  Card  from "../components/Card";
-import { getExpense } from "../services/expense";
+import { getExpense, updateExpense } from "../services/expense";
 import { getCategoryId } from "../services/category";
 import BackIcon from "../components/BackIcon";
 const Home = () => {
@@ -30,13 +30,17 @@ const Home = () => {
   const userId=getUserId();
   const [editingCategory, setEditingCategory] = useState<string | null>(null);
   const [newCategoryName, setNewCategoryName] = useState<string>("");
+  const[nameForEditExpense,setNameForEditExpense]=useState('');
+  const[showEditExpense,setShowEditExpense]=useState(false);
+  const [amount, setAmount] = useState(expense?.amount || "");
+  const [description, setDescription] = useState(expense?.description || "");
+
 
 
 
   const handleClickThreePoints=( categoryName:string)=>{
       setActiveCategory(categoryName);
-      setClickThreePoints(prev=>!prev);
-      
+      setClickThreePoints(prev=>!prev);   
   }
 
 
@@ -108,7 +112,6 @@ const Home = () => {
       catch(e){
         console.log("erro ao fazer requisição da categoria");
       }
-      
     }
     
   }
@@ -127,7 +130,7 @@ const Home = () => {
         window.location.reload();
         
       }
-      
+      console.log(categoryId);
     }
     catch(e){
       console.log(e,'erro ao fazer requisição');
@@ -136,8 +139,25 @@ const Home = () => {
       setEditingCategory(null);
     }
   }
-  const handleUpdateExpense= async()=>{
-    console.log('chamou a função');
+  const handleEditExpense= async(name:string)=>{
+    setNameForEditExpense(name);
+    setShowCategorieDetails(prev=>!prev);
+    setClickThreePoints(prev=>!prev);
+    setShowEditExpense(prev=>!prev);
+  }
+
+  const handleSaveExpense=async(categoryName:string)=>{
+    try{
+      const updatedExpense={
+        amount:editingExpenseAmount,
+        description:description,
+      } 
+
+      await updateExpense({categoryId,})
+    }
+    catch(e){
+      console.log(e);
+    }
   }
 
   const handleDeleteCategory=async(name:string)=>{
@@ -185,15 +205,16 @@ const Home = () => {
               <div className="relative">
                 <li key={index} >
                   {editingCategory ===category.name ?(
-                    <input type="text"
-                    value={newCategoryName}
-                    onChange={(e)=>setNewCategoryName(e.target.value)}
-                    onBlur={()=>handleUpdateCategory(category.name,newCategoryName)}
-                    className="flex relative left-5 bg-transparent text-black font-bold focus:outline-none"
-                    style={{paddingTop:'16px',
-                    background:'rgba(255,255,255,0.5)',
-                    borderRadius:'2px',width:'320px',}}
-                    />
+                    <div className="flex relative left-5 bg-transparent text-black font-bold focus:outline-none">
+                      <input type="text"
+                      value={newCategoryName}
+                      onChange={(e)=>setNewCategoryName(e.target.value)}
+                      onBlur={()=>handleUpdateCategory(category.name,newCategoryName)}
+                      style={{paddingTop:'16px',
+                      background:'rgba(255,255,255,0.5)',
+                      borderRadius:'2px',width:'320px',}}
+                      />
+                    </div>
                   ) :
                     (
                       <Card title={category.name} 
@@ -218,10 +239,33 @@ const Home = () => {
                     {clickThreePoints && activeCategory === category.name && (
                         <div className="absolute flex-row bottom-2 left-36 w-40 h-18 rounded-md" style={{backgroundColor:'white',zIndex:10}}>
                           <p style={{color:'black'}} onClick={()=>handleEditClick(category.name)}>Editar Categoria</p>
-                          <p style={{color:'black'}} onClick={handleUpdateExpense}>Editar Expense</p>
+                          <p style={{color:'black'}} onClick={()=>handleEditExpense(category.name)}>Editar Expense</p>
                           <p style={{color:'black'}} onClick={()=>handleDeleteCategory(category.name)}> Apagar Categoria</p>
                         </div>
                     )}
+
+{showEditExpense && nameForEditExpense === category.name && (
+  <div className="flex justify-center relative left-5 w-80" style={{height:'auto', borderRadius:'5px', background:'rgba(255,255,255,0.5)'}}>
+    <input 
+      type="number" 
+      value={amount}
+      onChange={(e) => setAmount(e.target.value)}
+      placeholder="Valor"
+      className="mb-2 w-full p-2 border border-gray-300 rounded"
+    />
+    <input 
+      type="text" 
+      value={description}
+      onChange={(e) => setDescription(e.target.value)}
+      placeholder="Descrição"
+      className="w-full p-2 border border-gray-300 rounded"
+    />
+    <button onClick={() => handleSaveExpense(category.name)} className="mt-2 bg-blue-500 text-white p-2 rounded">
+      Salvar
+    </button>
+  </div>
+)}
+
               </div>
             ))}
           </ul>
